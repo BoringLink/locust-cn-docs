@@ -1,0 +1,167 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28T00:00:00.000Z",
+  "terms": {
+    "locust": {
+      "zh": "Locust",
+      "en": "Locust",
+      "definition": "一个开源的性能测试工具，使用 Python 编写，支持分布式负载测试",
+      "category": "核心概念",
+      "relatedTerms": ["user", "task", "distributed-mode"]
+    },
+    "user": {
+      "zh": "用户",
+      "en": "User",
+      "definition": "在 Locust 中模拟真实用户行为的类，继承自 HttpUser 或其他 User 类",
+      "category": "核心概念",
+      "relatedTerms": ["task", "wait-time", "taskset"]
+    },
+    "task": {
+      "zh": "任务",
+      "en": "Task",
+      "definition": "用户执行的具体操作，使用 @task 装饰器定义",
+      "category": "核心概念",
+      "relatedTerms": ["user", "taskset"]
+    },
+    "taskset": {
+      "zh": "任务集",
+      "en": "TaskSet",
+      "definition": "一组相关任务的集合，可以嵌套使用",
+      "category": "核心概念",
+      "relatedTerms": ["task", "user"]
+    },
+    "distributed-mode": {
+      "zh": "分布式模式",
+      "en": "Distributed Mode",
+      "definition": "在多台机器上运行 Locust 以模拟更多并发用户的模式",
+      "category": "核心概念",
+      "relatedTerms": ["master", "worker", "locust"]
+    },
+    "master": {
+      "zh": "主节点",
+      "en": "Master",
+      "definition": "在分布式模式下协调所有 Worker 节点的主控节点",
+      "category": "分布式",
+      "relatedTerms": ["worker", "distributed-mode"]
+    },
+    "worker": {
+      "zh": "工作节点",
+      "en": "Worker",
+      "definition": "在分布式模式下执行实际负载测试的节点",
+      "category": "分布式",
+      "relatedTerms": ["master", "distributed-mode"]
+    },
+    "hatch-rate": {
+      "zh": "孵化速率",
+      "en": "Hatch Rate",
+      "definition": "每秒启动的用户数量",
+      "category": "配置",
+      "relatedTerms": ["user", "spawn-rate"]
+    },
+    "spawn-rate": {
+      "zh": "生成速率",
+      "en": "Spawn Rate",
+      "definition": "每秒生成的用户数量，新版本中替代了 Hatch Rate",
+      "category": "配置",
+      "relatedTerms": ["hatch-rate", "user"]
+    },
+    "wait-time": {
+      "zh": "等待时间",
+      "en": "Wait Time",
+      "definition": "用户在执行任务之间的等待时间",
+      "category": "配置",
+      "relatedTerms": ["user", "between", "constant"]
+    },
+    "between": {
+      "zh": "between",
+      "en": "between",
+      "definition": "在指定范围内随机选择等待时间的函数",
+      "category": "工具函数",
+      "relatedTerms": ["wait-time", "constant"]
+    },
+    "constant": {
+      "zh": "constant",
+      "en": "constant",
+      "definition": "返回固定等待时间的函数",
+      "category": "工具函数",
+      "relatedTerms": ["wait-time", "between"]
+    },
+    "web-ui": {
+      "zh": "Web UI",
+      "en": "Web UI",
+      "definition": "Locust 提供的基于浏览器的用户界面，用于监控和控制测试",
+      "category": "界面",
+      "relatedTerms": ["locust"]
+    },
+    "locustfile": {
+      "zh": "测试文件",
+      "en": "Locustfile",
+      "definition": "包含 Locust 测试定义的 Python 文件，通常命名为 locustfile.py",
+      "category": "核心概念",
+      "relatedTerms": ["user", "task"]
+    },
+    "shape": {
+      "zh": "形状",
+      "en": "Shape",
+      "definition": "定义负载测试过程中用户数量变化模式的类",
+      "category": "高级功能",
+      "relatedTerms": ["user", "load-test"]
+    },
+    "load-test": {
+      "zh": "负载测试",
+      "en": "Load Test",
+      "definition": "通过模拟大量并发用户来测试系统性能的测试方法",
+      "category": "测试类型",
+      "relatedTerms": ["locust", "performance-test"]
+    },
+    "performance-test": {
+      "zh": "性能测试",
+      "en": "Performance Test",
+      "definition": "评估系统在特定条件下的响应时间、吞吐量等性能指标的测试",
+      "category": "测试类型",
+      "relatedTerms": ["load-test", "stress-test"]
+    },
+    "stress-test": {
+      "zh": "压力测试",
+      "en": "Stress Test",
+      "definition": "通过超出正常负载来测试系统极限的测试方法",
+      "category": "测试类型",
+      "relatedTerms": ["load-test", "performance-test"]
+    },
+    "rps": {
+      "zh": "每秒请求数",
+      "en": "RPS (Requests Per Second)",
+      "definition": "系统每秒处理的请求数量，衡量吞吐量的指标",
+      "category": "性能指标",
+      "relatedTerms": ["throughput", "qps"]
+    },
+    "qps": {
+      "zh": "每秒查询数",
+      "en": "QPS (Queries Per Second)",
+      "definition": "系统每秒处理的查询数量，与 RPS 类似",
+      "category": "性能指标",
+      "relatedTerms": ["rps", "throughput"]
+    },
+    "throughput": {
+      "zh": "吞吐量",
+      "en": "Throughput",
+      "definition": "系统在单位时间内处理的请求或数据量",
+      "category": "性能指标",
+      "relatedTerms": ["rps", "qps"]
+    },
+    "response-time": {
+      "zh": "响应时间",
+      "en": "Response Time",
+      "definition": "从发送请求到收到响应所需的时间",
+      "category": "性能指标",
+      "relatedTerms": ["latency", "performance-test"]
+    },
+    "latency": {
+      "zh": "延迟",
+      "en": "Latency",
+      "definition": "请求处理的延迟时间，通常指响应时间",
+      "category": "性能指标",
+      "relatedTerms": ["response-time"]
+    }
+  }
+}

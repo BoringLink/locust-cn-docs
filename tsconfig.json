@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "types": ["vitepress/client", "node", "vitest"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["vitepress/*"],
+      "@components/*": ["vitepress/theme/components/*"],
+      "@plugins/*": ["vitepress/plugins/*"],
+      "@data/*": ["vitepress/data/*"]
+    }
+  },
+  "include": ["vitepress/**/*.ts", "vitepress/**/*.vue", "docs/**/*.md"],
+  "exclude": ["node_modules", "dist", "vitepress/cache"]
+}

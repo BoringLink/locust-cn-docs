@@ -1,0 +1,39 @@
+{
+  "paths": {
+    "/getting-started/installation": {
+      "next": "/getting-started/quickstart",
+      "title": "快速开始",
+      "description": "完成安装后 3 分钟跑通第一个 Locust 场景"
+    },
+    "/getting-started/quickstart": {
+      "next": "/writing-locustfile/basics",
+      "title": "Locustfile 基础",
+      "description": "理解用户类、任务、等待时间等核心元素"
+    },
+    "/getting-started/first-test": {
+      "next": "/writing-locustfile/basics",
+      "title": "Locustfile 基础",
+      "description": "继续完善脚本结构与可复用性"
+    },
+    "/writing-locustfile/basics": {
+      "next": "/writing-locustfile/tasks-and-users",
+      "title": "任务与用户建模",
+      "description": "掌握任务权重、标签、场景拆分等实践"
+    },
+    "/writing-locustfile/tasks-and-users": {
+      "next": "/running-tests/configuration",
+      "title": "运行配置",
+      "description": "配置 CLI 参数、环境变量与配置文件"
+    },
+    "/running-tests/configuration": {
+      "next": "/running-tests/distributed-load",
+      "title": "分布式压测",
+      "description": "如何在 Master/Worker 架构中扩展并发"
+    },
+    "/running-tests/distributed-load": {
+      "next": "/api/",
+      "title": "API 导览",
+      "description": "定位 2.45.5 版本的核心类与装饰器"
+    }
+  }
+}

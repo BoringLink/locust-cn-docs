@@ -1,0 +1,58 @@
+{
+  "name": "locust-cn-docs",
+  "version": "1.0.0",
+  "description": "Locust 中文文档 - 性能极致、工程优雅、翻译精准",
+  "type": "module",
+  "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --ext .ts,.vue,.js",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "locust",
+    "performance-testing",
+    "load-testing",
+    "documentation",
+    "chinese"
+  ],
+  "author": "Boring Link",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1",
+    "@unocss/reset": "^66.5.9",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue-jsx": "^5.1.2",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.6.2",
+    "fast-check": "^4.3.0",
+    "globals": "^16.5.0",
+    "jsdom": "^27.2.0",
+    "markdown-it": "^14.1.0",
+    "pinyin-pro": "^3.27.0",
+    "prettier": "^3.7.1",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "unocss": "^66.5.9",
+    "vite": "^7.2.4",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-imagemin": "^0.6.1",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.0.14",
+    "vue": "^3.5.25",
+    "vue-eslint-parser": "^10.2.0"
+  },
+  "dependencies": {
+    "@floating-ui/vue": "^1.1.9",
+    "minisearch": "^7.2.0",
+    "vite-plugin-image-optimizer": "^2.0.3"
+  }
+}

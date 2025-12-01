@@ -1,0 +1,34 @@
+/**
+ * Locust 中文文档自定义 CSS 变量
+ * 基于 Locust 官方绿色主题
+ */
+
+:root {
+  /* 品牌色 - Locust 官方绿 */
+  --vp-c-brand-1: #35563a;
+  --vp-c-brand-2: #4a7350;
+  --vp-c-brand-3: #5f8f66;
+  --vp-c-brand-soft: rgba(53, 86, 58, 0.14);
+
+  /* 字体 */
+  --vp-font-family-base: 'HarmonyOS Sans', 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --vp-font-family-mono: 'Geist Mono', 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+
+  /* 代码块 */
+  --vp-code-font-size: 14px;
+  --vp-code-line-height: 1.7;
+  --vp-code-block-bg: rgba(125, 125, 125, 0.04);
+
+  /* 布局 */
+  --vp-layout-max-width: 1440px;
+}
+
+/* 暗色模式 */
+.dark {
+  --vp-c-brand-1: #5f8f66;
+  --vp-c-brand-2: #4a7350;
+  --vp-c-brand-3: #35563a;
+  --vp-c-brand-soft: rgba(95, 143, 102, 0.16);
+  
+  --vp-code-block-bg: rgba(0, 0, 0, 0.2);
+}

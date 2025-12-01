@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "tsconfig.json",
+    "eslint.config.ts",
+    "uno.config.ts",
+    "vitest.config.ts",
+    "**/*.config.ts",
+    ".vitepress/**/*.ts",
+    ".vitepress/**/*.vue",
+    "docs/.vitepress/**/*.ts",
+    "docs/.vitepress/**/*.vue",
+  ]
+}
