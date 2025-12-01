@@ -1,3 +1,7 @@
+# 脚本和报告
+scripts/
+copilot-summary/
+
 # Dependencies
 node_modules/
 package-lock.json

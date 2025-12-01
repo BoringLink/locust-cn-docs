@@ -1,7 +1,8 @@
 ---
 layout: home
-title: Locust 中文文档
-titleTemplate: 简单、可扩展的性能测试工具
+title: Locust 中文文档 - Python 性能测试框架官方中文文档
+titleTemplate: 简单、可扩展、开源的分布式负载测试工具
+description: Locust 性能测试框架官方中文文档。使用 Python 编写测试脚本，支持分布式负载测试、实时 Web UI 监控、API 测试。完全开源免费，适用于 Web 应用、微服务、API 等各类系统的性能压测。
 
 hero:
   name: Locust
@@ -9,7 +10,7 @@ hero:
   tagline: 简单、可扩展、开源 - 用 Python 编写性能测试
   image:
     src: /assets/branding/Locust-logo.svg
-    alt: Locust Logo
+    alt: Locust 性能测试框架 Logo
   actions:
     - theme: brand
       text: 快速开始

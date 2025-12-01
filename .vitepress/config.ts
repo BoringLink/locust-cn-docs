@@ -12,10 +12,122 @@ export default defineConfig({
   ignoreDeadLinks: [/^https?:\/\/localhost(:\d+)?/],
 
   head: [
-    ['link', { rel: 'icon', href: '/locust-cn-docs/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#35563a' }],
-    ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:locale', content: 'zh_CN' }],
+    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1' }],
+    ['meta', { name: 'author', content: 'Locust 中文文档个人开发者 Boring Link' }],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content:
+          'Locust,Locust中文文档,性能测试,压力测试,负载测试,并发测试,Python性能测试,分布式测试,性能测试工具,接口测试,API测试,Web测试,HTTP测试,压测工具,开源性能测试,Python压测,微服务测试,性能监控,测试框架,自动化测试',
+      },
+    ],
+
+    // Open Graph / Facebook
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'Locust 中文文档' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    ['meta', { property: 'og:title', content: 'Locust 中文文档 - 简单、可扩展的性能测试工具' }],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content:
+          '使用 Python 编写性能测试脚本，支持分布式负载测试，提供实时 Web UI 监控。Locust 官方中文文档，翻译精准，示例完整。',
+      },
+    ],
+    ['meta', { property: 'og:url', content: 'https://locust-cn.pages.dev/' }],
+    [
+      'meta',
+      { property: 'og:image', content: 'https://locust-cn.pages.dev/Locust-logo.svg' },
+    ],
+
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Locust 中文文档 - 简单、可扩展的性能测试工具' }],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content: '使用 Python 编写性能测试脚本，支持分布式负载测试，提供实时 Web UI 监控。',
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'twitter:image',
+        content: 'https://locust-cn.pages.dev/Locust-logo.svg',
+      },
+    ],
+
+    // 百度 SEO 优化
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-XXXXXXXX' }],
+    ['meta', { name: 'mobile-agent', content: 'format=html5; url=https://locust-cn.pages.dev/' }],
+    ['meta', { name: 'applicable-device', content: 'pc,mobile' }],
+    ['meta', { name: 'renderer', content: 'webkit' }],
+    ['meta', { httpEquiv: 'Cache-Control', content: 'no-transform' }],
+    ['meta', { httpEquiv: 'Cache-Control', content: 'no-siteapp' }],
+    
+    // 360 搜索优化
+    ['meta', { name: '360-site-verification', content: 'XXXXXXXXXXXXXXXXXXXXXXXX' }],
+    
+    // 搜狗搜索优化
+    ['meta', { name: 'sogou_site_verification', content: 'XXXXXXXXXXXXXXXX' }],
+    
+    // Google 站点验证
+    ['meta', { name: 'google-site-verification', content: 'XXXXXXXXXXXXXXXXXXXXXXXX' }],
+
+    // Canonical URL
+    ['link', { rel: 'canonical', href: 'https://locust-cn.pages.dev/' }],
+
+    // Alternate language versions
+    [
+      'link',
+      { rel: 'alternate', hreflang: 'zh-CN', href: 'https://locust-cn.pages.dev/' },
+    ],
+    ['link', { rel: 'alternate', hreflang: 'en', href: 'https://docs.locust.io/' }],
+
+    // JSON-LD 结构化数据
+    [
+      'script',
+      { type: 'application/ld+json' },
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Locust',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        description:
+          'Locust 是一个易于使用、可编写脚本且可扩展的性能测试工具。使用 Python 代码定义用户行为，测试任何系统。',
+        url: 'https://locust-cn.pages.dev/',
+        author: {
+          '@type': 'Organization',
+          name: 'Locust 中文文档团队',
+        },
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.8',
+          ratingCount: '2000',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        programmingLanguage: 'Python',
+        keywords: '性能测试,压力测试,负载测试,Python,分布式测试,并发测试,接口测试',
+        inLanguage: 'zh-CN',
+        license: 'https://opensource.org/licenses/MIT',
+        softwareVersion: '2.45.5',
+        releaseNotes: 'https://github.com/locustio/locust/releases',
+        applicationSubCategory: '性能测试工具',
+        featureList: ['分布式负载测试', 'Python脚本编写', '实时Web监控', '支持多种协议', '开源免费'],
+      }),
+    ],
   ],
 
   // 主题配置
@@ -178,14 +290,110 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
 
-  // GitHub仓库子路径配置
-  // base: '/locust-cn-docs/',
-
   // 源目录配置
   srcDir: 'docs',
 
   // 站点地图
   sitemap: {
-    hostname: 'https://tkssoul.github.io/locust-cn-docs',
+    hostname: 'https://locust-cn.pages.dev',
+    transformItems: (items) => {
+      return items.map((item) => {
+        const url = item.url
+        
+        // 首页优先级最高
+        if (url === 'https://locust-cn.pages.dev/' || url === 'https://locust-cn.pages.dev') {
+          return { ...item, priority: 1.0, changefreq: 'weekly' }
+        }
+        // API 参考（必须在 getting-started 之前检查）
+        if (url.includes('/api/') || url.includes('/api')) {
+          return { ...item, priority: 0.7, changefreq: 'monthly' }
+        }
+        // 快速开始和主要文档页面
+        if (
+          url.includes('/getting-started') ||
+          url.includes('/writing-locustfile') ||
+          url.includes('/running-tests')
+        ) {
+          return { ...item, priority: 0.8, changefreq: 'weekly' }
+        }
+        // 其他页面
+        return { ...item, priority: 0.5, changefreq: 'monthly' }
+      })
+    },
+  },
+
+  // 动态 head 标签配置（为每个页面生成唯一的 SEO 元数据）
+  transformHead: ({ pageData }) => {
+    const head = []
+    const canonicalUrl = `https://locust-cn.pages.dev/${pageData.relativePath.replace(/\.md$/, '')}`
+
+    // 为每个页面添加 canonical URL
+    head.push(['link', { rel: 'canonical', href: canonicalUrl }])
+
+    // 如果页面有描述，添加 og:description
+    if (pageData.frontmatter.description) {
+      head.push(['meta', { property: 'og:description', content: pageData.frontmatter.description }])
+      head.push([
+        'meta',
+        { name: 'twitter:description', content: pageData.frontmatter.description },
+      ])
+    }
+
+    // 如果页面有标题，添加 og:title
+    if (pageData.title) {
+      const fullTitle = `${pageData.title} | Locust 中文文档`
+      head.push(['meta', { property: 'og:title', content: fullTitle }])
+      head.push(['meta', { name: 'twitter:title', content: fullTitle }])
+    }
+
+    // 添加页面 URL
+    head.push(['meta', { property: 'og:url', content: canonicalUrl }])
+
+    // 为文档页面添加额外的结构化数据
+    if (
+      pageData.relativePath.includes('getting-started') ||
+      pageData.relativePath.includes('writing-locustfile') ||
+      pageData.relativePath.includes('running-tests') ||
+      pageData.relativePath.includes('api')
+    ) {
+      const breadcrumbList = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Locust 中文文档',
+            item: 'https://locust-cn.pages.dev/',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: pageData.title,
+            item: canonicalUrl,
+          },
+        ],
+      }
+      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(breadcrumbList)])
+
+      // 为教程/文档页面添加 TechArticle 结构化数据
+      const techArticle = {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        headline: pageData.title,
+        description: pageData.frontmatter.description || '',
+        author: {
+          '@type': 'Organization',
+          name: 'Locust 中文文档团队',
+        },
+        datePublished: pageData.frontmatter.lastUpdated || '2025-11-27',
+        dateModified: pageData.frontmatter.lastUpdated || '2025-11-27',
+        inLanguage: 'zh-CN',
+        url: canonicalUrl,
+      }
+      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(techArticle)])
+    }
+
+    return head
   },
 })

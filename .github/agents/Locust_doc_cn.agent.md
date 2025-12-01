@@ -69,6 +69,6 @@ description: Locust 中文文档项目规则，确保翻译精准、一致性高
 
 - 编辑器：VS Code (v1.101+) + Copilot 扩展。
 - 测试：MacBook Pro M1 (macOS 26 Tahoe)、iPhone 16 Pro Max (iOS 26.1)。
-- 部署：GitHub Pages。
+- 部署：Cloudflare Pages。
 
 严格遵守以上规则，违反视为错误。此手册随项目更新，当前 v1.0（2025-11-26）。

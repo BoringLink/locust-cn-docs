@@ -1,0 +1,67 @@
+# robots.txt for Locust 中文文档
+# https://locust-cn.pages.dev
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://locust-cn.pages.dev/sitemap.xml
+
+# 国内搜索引擎优化
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Baiduspider-image
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Baiduspider-mobile
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: 360Spider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Sogou web spider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Sogou inst spider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Sogou spider2
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Sosospider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: YisouSpider
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 0.5
+
+# 国际搜索引擎
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+# 禁止访问的路径
+Disallow: /_nuxt/
+Disallow: /.vitepress/
+
+# 默认爬虫规则
+User-agent: *
+Allow: /
+Crawl-delay: 1
