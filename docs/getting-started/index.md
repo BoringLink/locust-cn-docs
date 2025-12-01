@@ -1,5 +1,5 @@
 ---
-title: 快速开始总览
+title: Locust快速开始 | 安装与入门教程
 description: 汇总 Locust 安装、快速开始与首个测试的流程
 sidebar_position: 0
 lastUpdated: 2025-11-27

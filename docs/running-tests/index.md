@@ -1,5 +1,5 @@
 ---
-title: 运行 Locust 测试总览
+title: 运行Locust测试 | 命令与分布式配置
 description: 了解如何配置 CLI、环境变量与分布式模式
 sidebar_position: 0
 lastUpdated: 2025-11-27

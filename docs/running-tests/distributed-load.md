@@ -1,5 +1,5 @@
 ---
-title: 分布式负载
+title: Locust分布式测试 | 多机压测配置
 description: 在 Master/Worker 架构下扩展并发，支撑更高 RPS
 sidebar_position: 2
 lastUpdated: 2025-11-27

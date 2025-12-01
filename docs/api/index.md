@@ -1,5 +1,5 @@
 ---
-title: API 参考
+title: Locust API参考 | 完整类与方法文档
 description: Locust 2.45.5 全量 API 参考，覆盖用户类、任务调度、事件、统计、扩展与配置
 sidebar_position: 1
 lastUpdated: 2025-11-30

@@ -1,5 +1,5 @@
 ---
-title: 第一个测试
+title: Locust第一个测试 | 从零构建可复现的压测场景
 description: 结合 Web UI 与 CLI，构建可复现的 Locust 首个压测任务
 sidebar_position: 3
 lastUpdated: 2025-11-27

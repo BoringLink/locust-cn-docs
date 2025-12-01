@@ -1,5 +1,5 @@
 ---
-title: 安装 Locust
+title: Locust安装教程 | Python性能测试工具
 description: 学习如何在你的系统上安装 Locust 性能测试框架
 sidebar_position: 1
 lastUpdated: 2025-11-27

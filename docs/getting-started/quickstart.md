@@ -1,5 +1,5 @@
 ---
-title: 快速开始
+title: Locust快速开始 | 5分钟入门教程
 description: 通过 3 个步骤写出第一个 Locust 场景并运行 Web UI，5 分钟看见吞吐曲线
 sidebar_position: 2
 lastUpdated: 2025-11-27

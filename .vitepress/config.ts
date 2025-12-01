@@ -6,7 +6,7 @@ import { externalLinksPlugin } from './plugins/external-links'
 import { termReplacerPlugin } from './plugins/term-replacer'
 
 export default defineConfig({
-  title: 'Locust 中文文档',
+  title: 'Locust中文文档 - Python开源性能测试框架 | 官方中文教程与完整API文档',
   description: 'Locust 性能测试框架官方中文文档 - 简单、可扩展、开源',
   lang: 'zh-CN',
   ignoreDeadLinks: [/^https?:\/\/localhost(:\d+)?/],
@@ -20,8 +20,7 @@ export default defineConfig({
       'meta',
       {
         name: 'keywords',
-        content:
-          'Locust,Locust中文文档,性能测试,压力测试,负载测试,并发测试,Python性能测试,分布式测试,性能测试工具,接口测试,API测试,Web测试,HTTP测试,压测工具,开源性能测试,Python压测,微服务测试,性能监控,测试框架,自动化测试',
+        content: 'Locust,性能测试,Python测试工具,负载测试,分布式测试,压力测试,API测试',
       },
     ],
 
@@ -29,7 +28,13 @@ export default defineConfig({
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'Locust 中文文档' }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
-    ['meta', { property: 'og:title', content: 'Locust 中文文档 - 简单、可扩展的性能测试工具' }],
+    [
+      'meta',
+      {
+        property: 'og:title',
+        content: 'Locust中文文档 - Python开源性能测试框架 | 官方教程与API文档',
+      },
+    ],
     [
       'meta',
       {
@@ -39,14 +44,17 @@ export default defineConfig({
       },
     ],
     ['meta', { property: 'og:url', content: 'https://locust-cn.pages.dev/' }],
-    [
-      'meta',
-      { property: 'og:image', content: 'https://locust-cn.pages.dev/Locust-logo.svg' },
-    ],
+    ['meta', { property: 'og:image', content: 'https://locust-cn.pages.dev/Locust-logo.svg' }],
 
     // Twitter Card
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: 'Locust 中文文档 - 简单、可扩展的性能测试工具' }],
+    [
+      'meta',
+      {
+        name: 'twitter:title',
+        content: 'Locust中文文档 - Python开源性能测试框架 | 官方教程与API文档',
+      },
+    ],
     [
       'meta',
       {
@@ -69,13 +77,13 @@ export default defineConfig({
     ['meta', { name: 'renderer', content: 'webkit' }],
     ['meta', { httpEquiv: 'Cache-Control', content: 'no-transform' }],
     ['meta', { httpEquiv: 'Cache-Control', content: 'no-siteapp' }],
-    
+
     // 360 搜索优化
     ['meta', { name: '360-site-verification', content: 'XXXXXXXXXXXXXXXXXXXXXXXX' }],
-    
+
     // 搜狗搜索优化
     ['meta', { name: 'sogou_site_verification', content: 'XXXXXXXXXXXXXXXX' }],
-    
+
     // Google 站点验证
     ['meta', { name: 'google-site-verification', content: 'XXXXXXXXXXXXXXXXXXXXXXXX' }],
 
@@ -83,10 +91,7 @@ export default defineConfig({
     ['link', { rel: 'canonical', href: 'https://locust-cn.pages.dev/' }],
 
     // Alternate language versions
-    [
-      'link',
-      { rel: 'alternate', hreflang: 'zh-CN', href: 'https://locust-cn.pages.dev/' },
-    ],
+    ['link', { rel: 'alternate', hreflang: 'zh-CN', href: 'https://locust-cn.pages.dev/' }],
     ['link', { rel: 'alternate', hreflang: 'en', href: 'https://docs.locust.io/' }],
 
     // JSON-LD 结构化数据
@@ -119,13 +124,19 @@ export default defineConfig({
           worstRating: '1',
         },
         programmingLanguage: 'Python',
-        keywords: '性能测试,压力测试,负载测试,Python,分布式测试,并发测试,接口测试',
+        keywords: 'Locust,性能测试,Python测试工具,负载测试,分布式测试,压力测试,API测试',
         inLanguage: 'zh-CN',
         license: 'https://opensource.org/licenses/MIT',
         softwareVersion: '2.45.5',
         releaseNotes: 'https://github.com/locustio/locust/releases',
         applicationSubCategory: '性能测试工具',
-        featureList: ['分布式负载测试', 'Python脚本编写', '实时Web监控', '支持多种协议', '开源免费'],
+        featureList: [
+          '分布式负载测试',
+          'Python脚本编写',
+          '实时Web监控',
+          '支持多种协议',
+          '开源免费',
+        ],
       }),
     ],
   ],
@@ -299,7 +310,7 @@ export default defineConfig({
     transformItems: (items) => {
       return items.map((item) => {
         const url = item.url
-        
+
         // 首页优先级最高
         if (url === 'https://locust-cn.pages.dev/' || url === 'https://locust-cn.pages.dev') {
           return { ...item, priority: 1.0, changefreq: 'weekly' }
@@ -325,7 +336,12 @@ export default defineConfig({
   // 动态 head 标签配置（为每个页面生成唯一的 SEO 元数据）
   transformHead: ({ pageData }) => {
     const head = []
-    const canonicalUrl = `https://locust-cn.pages.dev/${pageData.relativePath.replace(/\.md$/, '')}`
+    // 生成规范的URL，移除index后缀，确保尾部斜杠一致性
+    let path = pageData.relativePath.replace(/\.md$/, '').replace(/\/index$/, '')
+    if (path && !path.endsWith('/')) {
+      path += '/'
+    }
+    const canonicalUrl = `https://locust-cn.pages.dev/${path}`
 
     // 为每个页面添加 canonical URL
     head.push(['link', { rel: 'canonical', href: canonicalUrl }])

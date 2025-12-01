@@ -1,5 +1,5 @@
 ---
-title: 编写 Locustfile 基础
+title: Locustfile编写基础 | 性能测试脚本
 description: 了解用户类、任务、等待时间与项目结构，打造可维护的压测脚本
 sidebar_position: 1
 lastUpdated: 2025-11-27
