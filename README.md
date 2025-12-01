@@ -67,7 +67,7 @@ locust -f locustfile.py --host=https://example.com
 发现翻译问题、遗漏内容、或者希望参与维护，欢迎随时：
 
 - 提交 Issue
-- 直接 PR（我们有详细的贡献指南）
+- 直接 PR
 - 在 Discussions 交流使用经验
 
 感谢所有贡献者和使用者的支持
