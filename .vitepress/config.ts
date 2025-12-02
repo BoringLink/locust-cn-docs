@@ -46,7 +46,10 @@ export default defineConfig({
     ['meta', { property: 'og:url', content: 'https://locustcndocs.boringlink.cn/' }],
     [
       'meta',
-      { property: 'og:image', content: 'https://locustcndocs.boringlink.cn/Locust-logo-darkmode.svg' },
+      {
+        property: 'og:image',
+        content: 'https://locustcndocs.boringlink.cn/Locust-logo-darkmode.svg',
+      },
     ],
 
     // Twitter Card
@@ -197,10 +200,10 @@ export default defineConfig({
       ],
     },
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/tkssoul/locust-cn-docs' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/BoringLink/locust-cn-docs' }],
 
     editLink: {
-      pattern: 'https://github.com/tkssoul/locust-cn-docs',
+      pattern: 'https://github.com/BoringLink/locust-cn-docs',
       text: '在 GitHub 上编辑此页',
     },
 

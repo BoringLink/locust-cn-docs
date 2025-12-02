@@ -18,7 +18,7 @@ hero:
       link: /getting-started/installation
     - theme: alt
       text: GitHub
-      link: https://github.com/tkssoul/locust-cn-docs.git
+      link: https://github.com/BoringLink/locust-cn-docs.git
 
 features:
   - icon:
