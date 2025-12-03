@@ -77,6 +77,9 @@ locust -f locustfile.py --host=https://example.com
 
 如果您觉得这个项目对您有帮助，欢迎通过以下方式支持我：
 
+- Paypal: 2495830486@qq.com
+
+- 支付宝: 
 <div>
   <img src="/docs/public/支付宝收款码.JPG" alt="支付宝收款码" style="width: 200px; margin-right: 20px;" />
 </div>
