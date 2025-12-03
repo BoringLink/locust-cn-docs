@@ -8,6 +8,7 @@
 > 完整对应 Locust 2.45.5+，与官方英文版保持同步更新
 
 [官方英文文档](https://docs.locust.io)
+[中文文档](https://locustcndocs.boringlink.cn)
 
 ## Locust 是什么？
 
