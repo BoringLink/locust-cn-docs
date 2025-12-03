@@ -25,6 +25,11 @@
       "title": "运行配置",
       "description": "配置 CLI 参数、环境变量与配置文件"
     },
+    "/running-tests/index": {
+      "next": "/running-tests/configuration",
+      "title": "运行测试",
+      "description": "管理 CLI、配置文件与环境变量，稳定运行 Locust 场景"
+    },
     "/running-tests/configuration": {
       "next": "/running-tests/distributed-load",
       "title": "分布式压测",

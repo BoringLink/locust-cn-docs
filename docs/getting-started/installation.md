@@ -1,5 +1,6 @@
 ---
-title: Locust安装教程 | Python性能测试工具
+title: 安装
+titleTemplate: 快速上手Locust
 description: 学习如何在你的系统上安装 Locust 性能测试框架
 sidebar_position: 1
 lastUpdated: 2025-11-27
@@ -82,7 +83,6 @@ $ docker run -p 8089:8089 -v $PWD:/mnt/locust locustio/locust -f /mnt/locust/loc
 
 安装完成后，你可以：
 
-- [创建你的第一个测试](/getting-started/first-test)
 - [了解 Locust 的基础概念](/writing-locustfile/basics)
 
 ## 常见问题

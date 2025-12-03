@@ -1,5 +1,6 @@
 ---
-title: 编写Locustfile | 测试脚本开发指南
+title: 文档
+templateTitle: 文档
 description: 学习如何分层组织用户、任务与数据，编写可维护的 Locustfile
 sidebar_position: 0
 lastUpdated: 2025-11-27

@@ -6,8 +6,8 @@ import { externalLinksPlugin } from './plugins/external-links'
 import { termReplacerPlugin } from './plugins/term-replacer'
 
 export default defineConfig({
-  title: 'Locust中文文档 - Python开源性能测试框架 | 官方中文教程与完整API文档',
-  description: 'Locust 性能测试框架官方中文文档 - 简单、可扩展、开源',
+  title: 'Locust中文文档',
+  description: 'Locust 性能测试框架中文文档 - 简单、可扩展、开源的分布式负载测试工具',
   lang: 'zh-CN',
   ignoreDeadLinks: [/^https?:\/\/localhost(:\d+)?/],
 
@@ -32,7 +32,7 @@ export default defineConfig({
       'meta',
       {
         property: 'og:title',
-        content: 'Locust中文文档 - Python开源性能测试框架 | 官方教程与API文档',
+        content: 'Locust中文文档 - Python开源性能测试框架',
       },
     ],
     [
@@ -58,7 +58,7 @@ export default defineConfig({
       'meta',
       {
         name: 'twitter:title',
-        content: 'Locust中文文档 - Python开源性能测试框架 | 官方教程与API文档',
+        content: 'Locust中文文档 - Python开源性能测试框架',
       },
     ],
     [
@@ -165,7 +165,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '快速开始', link: '/getting-started/' },
       { text: '文档', link: '/writing-locustfile/' },
-      { text: '运行测试', link: '/running-tests/configuration' },
+      { text: '运行测试', link: '/running-tests/' },
       { text: 'API 参考', link: '/api/' },
     ],
 
@@ -175,8 +175,7 @@ export default defineConfig({
           text: '快速开始',
           items: [
             { text: '安装', link: '/getting-started/installation' },
-            { text: '快速开始', link: '/getting-started/quickstart' },
-            { text: '第一个测试', link: '/getting-started/first-test' },
+            { text: '快速上手', link: '/getting-started/quickstart' },
           ],
         },
       ],

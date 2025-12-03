@@ -1,5 +1,27 @@
 <template>
   <div class="responsive-table-wrapper">
+    <!-- 隐藏的列宽度测量表格 -->
+    <table
+      v-if="!isMobile && !hasMeasured"
+      ref="fakeTable"
+      style="position: absolute; left: -9999px; top: -9999px; visibility: hidden; width: auto"
+      class="responsive-table desktop"
+    >
+      <thead>
+        <tr>
+          <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, ri) in normalizedRows" :key="ri">
+          <td v-for="(cell, ci) in row" :key="ci">
+            <span v-if="shouldRenderHtml(cell)" v-html="getCellHtmlContent(cell)" />
+            <span v-else>{{ getCellText(cell) }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <table v-if="!isMobile" class="responsive-table desktop">
       <thead>
         <tr>
@@ -52,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch, type CSSProperties } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch, type CSSProperties } from 'vue'
 
 type HighlightTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
@@ -78,6 +100,10 @@ const props = defineProps<{
 }>()
 
 const BREAKPOINT_DEFAULT = 768
+
+// 列宽测量表格
+const fakeTable = ref<HTMLTableElement | null>(null)
+const hasMeasured = ref(false)
 
 const breakpoint = computed(() => props.mobileBreakpoint ?? BREAKPOINT_DEFAULT)
 const allowHtml = computed(() => Boolean(props.allowHtml))
@@ -190,8 +216,82 @@ const updateViewportFlag = () => {
   isMobile.value = window.innerWidth <= breakpoint.value
 }
 
+// 测量列宽
+const measureColumns = async () => {
+  if (hasMeasured.value || isMobile.value) return
+  await nextTick()
+
+  if (!fakeTable.value || props.rows.length === 0) return
+
+  const headerCells = fakeTable.value.querySelectorAll('thead th')
+  const bodyRows = fakeTable.value.querySelectorAll('tbody tr')
+  const colCount = props.headers.length
+
+  // 计算每列“内容所需的最小宽度”（包括 thead 和所有行）
+  const minWidths: number[] = Array(colCount).fill(0)
+
+  // 测量表头
+  headerCells.forEach((th, i) => {
+    minWidths[i] = Math.max(minWidths[i], th.scrollWidth)
+  })
+
+  // 测量所有单元格（包括富文本展开后的真实宽度）
+  bodyRows.forEach((row) => {
+    const tr = row as HTMLTableRowElement
+    const cells = tr.cells
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i] as HTMLElement
+      // 强制显示 + 展开 v-html 内容才能测准
+      cell.style.whiteSpace = 'nowrap'
+      cell.style.display = 'inline-block' // 关键！让 v-html 内容真正“摊开”
+      cell.style.maxWidth = 'none'
+      minWidths[i] = Math.max(minWidths[i], cell.scrollWidth + 40) // +40 预留 padding + 安全边距
+    }
+  })
+
+  // 将计算出的宽度应用到真实表格的 colgroup
+  const realTable = fakeTable.value!.parentElement?.querySelector(
+    'table.desktop'
+  ) as HTMLTableElement
+  if (realTable) {
+    let colgroup = realTable.querySelector('colgroup') as HTMLTableColElement | null
+    if (!colgroup) {
+      colgroup = document.createElement('colgroup')
+      realTable.prepend(colgroup)
+    }
+    colgroup.innerHTML = ''
+
+    minWidths.forEach((width, i) => {
+      const col = document.createElement('col')
+      if (i === minWidths.length - 1) {
+        // 最后一列：填充剩余空间
+        col.style.width = '100%'
+      } else {
+        col.style.width = `${width}px`
+        col.style.minWidth = `${width}px`
+      }
+      colgroup!.appendChild(col)
+    })
+  }
+
+  hasMeasured.value = true
+}
+
+// 在数据更新后重新测量
+watch(() => props.rows, measureColumns, { deep: true })
+watch(() => props.headers, measureColumns)
+// 响应式切换时也重新测量
+watch(isMobile, () => {
+  if (!isMobile.value) {
+    setTimeout(measureColumns, 100)
+  }
+})
+
 onMounted(() => {
   updateViewportFlag()
+
+  measureColumns()
+
   window.addEventListener('resize', updateViewportFlag)
 })
 
@@ -213,10 +313,13 @@ defineExpose({
 .responsive-table-wrapper {
   width: 100%;
   margin: 24px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .responsive-table {
   width: 100%;
+  table-layout: fixed !important;
   border-collapse: collapse;
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
@@ -226,11 +329,17 @@ defineExpose({
 }
 
 table.desktop thead {
+  width: 100%;
   background: var(--vp-c-bg-soft);
+}
+
+table.desktop tbody {
+  width: 100%;
 }
 
 table.desktop th,
 table.desktop td {
+  width: fit-content;
   padding: 12px 16px;
   border-bottom: 1px solid var(--vp-c-divider);
   text-align: left;

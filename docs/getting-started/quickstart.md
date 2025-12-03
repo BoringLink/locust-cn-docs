@@ -1,79 +1,153 @@
 ---
-title: Locust快速开始 | 5分钟入门教程
-description: 通过 3 个步骤写出第一个 Locust 场景并运行 Web UI，5 分钟看见吞吐曲线
+title: 快速上手
+titleTemplate: 快速开始
+description: 5分钟跑通第一个压测任务，15分钟学会写出可复现、可分享、可落CI的生产级 Locust 场景
 sidebar_position: 2
-lastUpdated: 2025-11-27
+lastUpdated: 2025-12-03
 ---
 
-# 快速开始
+# 快速上手 Locust（从 0 到生产级压测）
 
-> 目标：让你在 5 分钟内写出第一个 `locustfile.py`、运行 Web UI，并理解关键 CLI 选项。
+开始之前，确保你已经[安装 Locust](/getting-started/installation)
 
-## 准备环境
+- **5 分钟**：写出第一个 `locustfile.py` 并看到实时吞吐曲线
+- **15 分钟**：把试验脚本升级为团队可复用、可追踪、可自动化的生产级压测模板
 
-- 已安装 Python 3.8+ 与 `pip`
-- 已执行 `pip install locust`（参见 [安装文档](/getting-started/installation)）
-- 将工作目录切换到包含 `locustfile.py` 的项目根目录
+## 跑通第一个压测
 
-## 第一步：创建 `locustfile.py`
+### 创建 `locustfile.py`
 
-```python {1-20} showLineNumbers title="locustfile.py"
+```python title="locustfile.py"
 from locust import HttpUser, task, between
 
-class StorefrontUser(HttpUser):
+class QuickUser(HttpUser):
+    # 模拟真实用户思考时间 1~3 秒
     wait_time = between(1, 3)
 
-    @task(3)
-    def browse_products(self):
-        self.client.get('/catalog')
+    @task(3)  # 权重 3，最常执行
+    def browse_homepage(self):
+        self.client.get("/")
 
-    @task
-    def view_cart(self):
-        self.client.get('/cart')
+    @task(2)
+    def view_product(self):
+        self.client.get("/product/123")
 
-    @task
-    def checkout(self):
-        payload = {"item_id": 42, "quantity": 1}
-        self.client.post('/checkout', json=payload)
+    @task(1)
+    def add_to_cart(self):
+        self.client.post("/cart", json={"product_id": 123, "qty": 1})
 ```
 
-- `HttpUser`：代表虚拟用户。你也可以继承 `FastHttpUser` 以获得更高吞吐量。
-- `wait_time`：控制任务间的等待区间，让负载更贴近真实用户。
-- `@task(weight)`：通过权重表达任务频率。
+### 1.2 两种启动方式任选其一
 
-## 第二步：运行与观察
+**方式 A：可视化 Web UI**
 
 ```bash
-$ locust -f locustfile.py --headless -u 500 -r 25 --run-time 3m --csv ./reports/storefront
+locust -f locustfile.py
 ```
 
-- `-u/--users`：并发用户上限。
-- `-r/--spawn-rate`：每秒新增用户数（孵化速率）。
-- `--run-time`：限定测试时长，避免遗忘停止。
-- `--csv`：导出原始统计数据，便于分析。
+通过终端或直接打开 http://localhost:8089 → 填写 User 数量和 Spawn Rate → 开始测试
 
-需要实时界面时，传入 `locust -f locustfile.py`，打开浏览器访问 `http://localhost:8089`，填写 Users、Spawn rate 并点击 **Start swarming**。
+**方式 B：无头模式**
 
-## 第三步：解释指标
+```bash
+locust -f locustfile.py --headless -u 200 -r 20 --run-time 2m --csv=quick_report
+```
 
-| 指标       | 说明                 | 如何提升                          |
-| ---------- | -------------------- | --------------------------------- |
-| RPS/QPS    | 每秒请求/查询数      | 提升并发或使用 `FastHttpUser`     |
-| 响应时间   | 95%/99% 分位响应时间 | 优化后端或使用缓存                |
-| 失败率     | 非 2xx/3xx 的比例    | 打印 `response.failure()` 诊断    |
-| Hatch Rate | 实际孵化速率         | 调整 `--spawn-rate` 或扩容 Worker |
+你可以：
 
-> 提示：首次出现的术语采用“中文(English)”格式，帮助你在中文语境中保持英文名词对照。
+- 查看实时 RPS 曲线
+- 查看平均 / P95 / P99 RT
+- 查看失败率统计
+- 导出 CSV + HTML 报告
 
-## 常见问题排查
+恭喜！你已经完成 Locust 的“Hello World”！
 
-1. **CPU 打满**：尝试 `FastHttpUser`、减小 `--users`，或开启多进程/分布式。
-2. **连接超时**：确认压测目标允许足够的并发，或为 `self.client` 设置更高 `timeout`。
-3. **指标不刷新**：确保浏览器未阻止 WebSocket；命令行模式则关注进度日志。
+## 升级为生产级、可复现的压测模板
 
-## 下一步
+下面 4 个步骤能让你直接跨越到工程化阶段。
 
-- 如果想逐行了解装饰器与等待时间，请继续阅读 [编写测试文件基础](/writing-locustfile/basics)。
-- 需要完整英文参考时，访问 [Locust 官方文档 2.45.5](https://docs.locust.io/en/stable/)。
+### 1. 明确压测目标（写进脚本注释，防止遗忘）
 
-<!-- <NextReading /> -->
+```python
+# 压测目标：
+# - 验证商品详情页在 500 RPS 下 P95 < 600ms
+# - 模拟真实流量比例：浏览商品 50%、查看详情 30%、加入购物车 20%
+```
+
+### 2. 编写带权重的真实场景 + 自定义失败标记
+
+```python {1-45} showLineNumbers title="locustfile.py"
+from locust import HttpUser, task, between
+
+class Shopper(HttpUser):
+    host = "https://your-app.com"          # 统一设置域名
+    wait_time = between(1, 5)              # 更真实的思考时间
+
+    @task(5)   # 50% 流量
+    def list_products(self):
+        self.client.get("/api/products?limit=20")
+
+    @task(3)   # 30% 流量
+    def view_product_detail(self):
+        # 可加入参数化，让每次请求不同商品
+        product_id = self.environment.runner.user_count % 1000 + 1000
+        resp = self.client.get(f"/api/products/{product_id}")
+        if resp.status_code != 200:
+            resp.failure("商品详情加载失败")
+
+    @task(2)   # 20% 流量
+    def add_to_cart(self):
+        payload = {"product_id": 1001, "quantity": 1}
+        resp = self.client.post("/api/cart/add", json=payload)
+        if resp.json().get("success") is not True:
+            resp.failure("加入购物车失败")
+```
+
+### 3. 选择最适合你当前阶段的运行方式
+
+<ResponsiveTable :headers="['场景', '推荐命令', '说明']" :rows="[
+  ['本地调试', '`locust -f locustfile.py`', 'Web UI 实时调参'],
+  ['CI 自动化验证', '`locust --headless -u 500 -r 50 --run-time 10m --csv=report --html=report.html`', '自动出报告,失败时 exit code 非 0'],
+  ['大规模分布式压测', 'Master: `locust -f locustfile.py --master`<br>Worker: `locust -f locustfile.py --worker --master-host=Master IP`', '单机轻松破万 RPS']
+]" :allow-html="true" />
+
+### 4.保存结果
+
+1. **固定参数写进配置文件 `locust.conf`**（推荐）
+
+   ```ini title="locust.conf"
+   users = 500
+   spawn-rate = 50
+   run-time = 15m
+   headless = true
+   csv = reports/result
+   html = reports/result.html
+   ```
+
+2. **指定配置文件**
+
+   ```bash
+   locust -c locust.conf
+   ```
+
+3. **关键数据直接截图或导出**
+   - Web UI 导航栏 → Download Data（CSV）
+   - 失败请求明细 → Exceptions 标签页
+
+## 常见问题速查
+
+<ResponsiveTable :headers="['问题', '解决方案']" :rows="[
+  ['本地 CPU 100%', '改用 FastHttpUser (性能提升 5~10 倍)'],
+  ['连接被目标服务器拒绝', '目标服务器的白名单添加 Locust 机器 IP,或在脚本里设置 `self.client.headers` 伪装 User Agent'],
+  ['Web UI 不刷新', '确认防火墙放通 8089、5557、5558 端口'],
+  ['想参数化大量商品 ID', '使用 SequentialTaskSet + CSV 数据文件']
+]"  />
+
+## 下一步推荐阅读
+
+- [编写专业 Locustfile（参数化、数据池、事件钩子）](/writing-locustfile/basics)
+- [官方英文文档](https://docs.locust.io/en/stable/quickstart.html)
+
+现在，你已经拥有一个**真正可落地、可分享、可追溯**的 Locust 压测模板了。把这份文档发给团队新成员，他们也能在 15 分钟内独立跑出标准压测报告。
+
+祝你压出所有瓶颈！

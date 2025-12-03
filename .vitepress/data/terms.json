@@ -128,13 +128,21 @@
       "category": "测试类型",
       "relatedTerms": ["load-test", "performance-test"]
     },
+    "rt": {
+      "zh": "响应时间",
+      "en": "RT",
+      "definition": "从发送请求到收到完整响应所需的时间,是衡量系统性能的关键指标",
+      "category": "性能指标",
+      "relatedTerms": ["response-time", "latency", "performance-test"]
+    },
     "rps": {
       "zh": "每秒请求数",
       "en": "RPS (Requests Per Second)",
-      "definition": "系统每秒处理的请求数量，衡量吞吐量的指标",
+      "definition": "系统每秒处理的请求数量,衡量吞吐量的指标",
       "category": "性能指标",
       "relatedTerms": ["throughput", "qps"]
     },
+
     "qps": {
       "zh": "每秒查询数",
       "en": "QPS (Queries Per Second)",

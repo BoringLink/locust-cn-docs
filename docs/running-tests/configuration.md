@@ -1,5 +1,6 @@
 ---
-title: Locust运行配置 | 命令行与参数详解
+title: 运行配置
+titleTemplate: 运行测试
 description: 管理 CLI、配置文件与环境变量，稳定运行 Locust 场景
 sidebar_position: 1
 lastUpdated: 2025-11-27
