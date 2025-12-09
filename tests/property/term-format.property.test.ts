@@ -1,10 +1,10 @@
 /**
  * 属性测试：术语格式一致性
- * 功能: locust-cn-docs, 属性 1: 术语首次出现格式一致性
+ * 功能: locust-cn-docs, 属性 1: 术语格式一致性
  * 验证需求: 1.1
  * 
- * 对于任何文档页面和任何专业术语，当该术语在页面正文中首次出现时，
- * 渲染结果应包含"中文(English)"格式，后续出现应仅显示中文。
+ * 对于任何文档页面和任何专业术语，所有术语都只显示中文，
+ * 并在鼠标悬停时显示包含中英文和定义的提示框。
  */
 
 import { describe, it, expect } from 'vitest'
@@ -32,91 +32,40 @@ describe('属性测试：术语格式一致性', () => {
     definition: fc.string({ minLength: 5, maxLength: 100 }),
   })
 
-  it('属性 1: 首次出现时应该包含"中文(English)"格式', () => {
+  it('属性 1: 所有术语都应该只显示中文', () => {
     fc.assert(
-      fc.property(termPairArbitrary, (term) => {
+      fc.property(termPairArbitrary, fc.boolean(), (term, isFirstOccurrence) => {
         const wrapper = mount(TermTooltip, {
           props: {
             term: term.zh,
             english: term.en,
-            firstOccurrence: true,
+            firstOccurrence: isFirstOccurrence,
           },
         })
 
         const text = wrapper.text()
         
-        // 验证包含中文术语
-        expect(text).toContain(term.zh)
+        // 验证只显示中文术语
+        expect(text).toBe(term.zh)
         
-        // 验证包含英文术语（带括号）
-        expect(text).toContain(`(${term.en})`)
-        
-        // 验证格式正确：中文后面紧跟(English)
-        const expectedFormat = `${term.zh}(${term.en})`
-        expect(text).toContain(expectedFormat)
+        // 验证不包含英文术语（在可见文本中）
+        expect(text).not.toContain(term.en)
       }),
       { numRuns: 50 } // 运行 50 次迭代
     )
   })
 
-  it('属性 1: 后续出现时应该只显示中文', () => {
+  it('属性 1: 所有术语都应该使用 term-only 类', () => {
     fc.assert(
-      fc.property(termPairArbitrary, (term) => {
+      fc.property(termPairArbitrary, fc.boolean(), (term, isFirstOccurrence) => {
         const wrapper = mount(TermTooltip, {
           props: {
             term: term.zh,
             english: term.en,
-            firstOccurrence: false,
+            firstOccurrence: isFirstOccurrence,
           },
         })
 
-        const termOnlyElement = wrapper.find('.term-only')
-        
-        // 验证只显示中文术语
-        expect(termOnlyElement.exists()).toBe(true)
-        expect(termOnlyElement.text()).toBe(term.zh)
-        
-        // 验证不包含英文术语（在可见文本中）
-        const visibleText = wrapper.find('.term-only').text()
-        expect(visibleText).not.toContain(term.en)
-      }),
-      { numRuns: 50 }
-    )
-  })
-
-  it('属性 1: 首次出现应该有特殊样式标记', () => {
-    fc.assert(
-      fc.property(termPairArbitrary, (term) => {
-        const wrapper = mount(TermTooltip, {
-          props: {
-            term: term.zh,
-            english: term.en,
-            firstOccurrence: true,
-          },
-        })
-
-        // 验证有 first-occurrence 类
-        expect(wrapper.classes()).toContain('first-occurrence')
-        
-        // 验证有 term-with-english 元素
-        expect(wrapper.find('.term-with-english').exists()).toBe(true)
-      }),
-      { numRuns: 50 }
-    )
-  })
-
-  it('属性 1: 后续出现应该有不同的样式标记', () => {
-    fc.assert(
-      fc.property(termPairArbitrary, (term) => {
-        const wrapper = mount(TermTooltip, {
-          props: {
-            term: term.zh,
-            english: term.en,
-            firstOccurrence: false,
-          },
-        })
-
-        // 验证没有 first-occurrence 类（或者不是首次出现）
         // 验证有 term-only 元素
         expect(wrapper.find('.term-only').exists()).toBe(true)
         
@@ -146,23 +95,23 @@ describe('属性测试：术语格式一致性', () => {
           },
         })
 
-        // 两次都应该包含相同的中文术语
-        expect(firstWrapper.text()).toContain(term.zh)
-        expect(laterWrapper.text()).toContain(term.zh)
+        // 两次都应该只显示相同的中文术语
+        expect(firstWrapper.text()).toBe(term.zh)
+        expect(laterWrapper.text()).toBe(term.zh)
       }),
       { numRuns: 50 }
     )
   })
 
-  it('属性 1: 提示框应该在后续出现时可用', async () => {
+  it('属性 1: 提示框应该在所有术语上可用', async () => {
     await fc.assert(
-      fc.asyncProperty(termPairArbitrary, async (term) => {
+      fc.asyncProperty(termPairArbitrary, fc.boolean(), async (term, isFirstOccurrence) => {
         const wrapper = mount(TermTooltip, {
           props: {
             term: term.zh,
             english: term.en,
             definition: term.definition,
-            firstOccurrence: false,
+            firstOccurrence: isFirstOccurrence,
           },
         })
 
@@ -179,28 +128,6 @@ describe('属性测试：术语格式一致性', () => {
         expect(tooltip.find('.tooltip-en').text()).toBe(term.en)
       }),
       { numRuns: 20 } // 异步测试运行次数少一些
-    )
-  })
-
-  it('属性 1: 首次出现时不应该显示提示框', async () => {
-    await fc.assert(
-      fc.asyncProperty(termPairArbitrary, async (term) => {
-        const wrapper = mount(TermTooltip, {
-          props: {
-            term: term.zh,
-            english: term.en,
-            firstOccurrence: true,
-          },
-        })
-
-        // 触发鼠标悬停
-        await wrapper.trigger('mouseenter')
-        await wrapper.vm.$nextTick()
-
-        // 验证提示框不出现
-        expect(wrapper.find('.tooltip-content').exists()).toBe(false)
-      }),
-      { numRuns: 20 }
     )
   })
 
@@ -222,8 +149,7 @@ describe('属性测试：术语格式一致性', () => {
           },
         })
 
-        expect(wrapper.text()).toContain(term.zh)
-        expect(wrapper.text()).toContain(`(${term.en})`)
+        expect(wrapper.text()).toBe(term.zh)
       })
     })
 
@@ -241,8 +167,7 @@ describe('属性测试：术语格式一致性', () => {
         },
       })
 
-      expect(wrapper.text()).toContain(longTerm.zh)
-      expect(wrapper.text()).toContain(`(${longTerm.en})`)
+      expect(wrapper.text()).toBe(longTerm.zh)
     })
 
     it('应该处理单字符术语', () => {
@@ -259,8 +184,7 @@ describe('属性测试：术语格式一致性', () => {
         },
       })
 
-      expect(wrapper.text()).toContain(shortTerm.zh)
-      expect(wrapper.text()).toContain(`(${shortTerm.en})`)
+      expect(wrapper.text()).toBe(shortTerm.zh)
     })
   })
 })

@@ -35,7 +35,7 @@ export function termReplacerPlugin(md: MarkdownIt, options: TermReplacerOptions 
   }
 
   const config = {
-    markFirstOccurrence: options.markFirstOccurrence ?? true,
+    markFirstOccurrence: false, // 不再需要标记首次出现
     ignoreBlockDirectives: options.ignoreBlockDirectives ?? {
       start: '<!-- term-replacer:ignore-start -->',
       end: '<!-- term-replacer:ignore-end -->',
@@ -108,12 +108,7 @@ function processInlineChildren(
     }
 
     if (child.type === 'text') {
-      const replaced = replaceTextNode(
-        child.content,
-        TokenCtor,
-        termOccurrences,
-        config.markFirstOccurrence
-      )
+      const replaced = replaceTextNode(child.content, TokenCtor, termOccurrences)
       if (replaced) {
         nextChildren.push(...replaced)
       } else {
@@ -131,8 +126,7 @@ function processInlineChildren(
 function replaceTextNode(
   content: string,
   TokenCtor: typeof Token,
-  termOccurrences: Map<string, boolean>,
-  markFirstOccurrence: boolean
+  termOccurrences: Map<string, boolean>
 ): Token[] | null {
   if (!termPatternSource) {
     return null
@@ -156,13 +150,8 @@ function replaceTextNode(
       tokens.push(createTextToken(content.slice(lastIndex, start), TokenCtor))
     }
 
-    const alreadySeen = termOccurrences.has(lookup.id)
-    const isFirst = markFirstOccurrence ? !alreadySeen : false
-    if (markFirstOccurrence) {
-      termOccurrences.set(lookup.id, true)
-    }
-
-    tokens.push(createHtmlToken(createTermComponent(lookup.entry, isFirst), TokenCtor))
+    // 不再区分首次出现，所有术语都使用相同的显示方式
+    tokens.push(createHtmlToken(createTermComponent(lookup.entry, false), TokenCtor))
     lastIndex = regex.lastIndex
   }
 

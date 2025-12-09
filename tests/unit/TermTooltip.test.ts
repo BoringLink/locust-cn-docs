@@ -3,75 +3,20 @@ import { mount } from '@vue/test-utils'
 import TermTooltip from '../../.vitepress/theme/components/TermTooltip.vue'
 
 describe('TermTooltip 组件', () => {
-  describe('首次出现', () => {
-    it('应该渲染"中文(English)"格式', () => {
-      const wrapper = mount(TermTooltip, {
-        props: {
-          term: '用户',
-          english: 'User',
-          firstOccurrence: true,
-        },
-      })
-
-      const text = wrapper.text()
-      expect(text).toContain('用户')
-      expect(text).toContain('(User)')
-    })
-
-    it('应该有 first-occurrence 类', () => {
-      const wrapper = mount(TermTooltip, {
-        props: {
-          term: '用户',
-          english: 'User',
-          firstOccurrence: true,
-        },
-      })
-
-      expect(wrapper.classes()).toContain('first-occurrence')
-    })
-
-    it('应该显示中文和英文', () => {
-      const wrapper = mount(TermTooltip, {
-        props: {
-          term: '任务',
-          english: 'Task',
-          firstOccurrence: true,
-        },
-      })
-
-      expect(wrapper.find('.term-with-english').exists()).toBe(true)
-      expect(wrapper.find('.english-term').text()).toBe('(Task)')
-    })
-
-    it('首次出现时不应该显示提示框', async () => {
-      const wrapper = mount(TermTooltip, {
-        props: {
-          term: '用户',
-          english: 'User',
-          firstOccurrence: true,
-        },
-      })
-
-      await wrapper.trigger('mouseenter')
-      expect(wrapper.find('.tooltip-content').exists()).toBe(false)
-    })
-  })
-
-  describe('后续出现', () => {
+  describe('术语显示', () => {
     it('应该只显示中文术语', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '用户',
           english: 'User',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
-      expect(wrapper.find('.term-only').exists()).toBe(true)
-      expect(wrapper.find('.term-only').text()).toBe('用户')
+      expect(wrapper.text()).toBe('用户')
     })
 
-    it('应该有虚线下划线样式', () => {
+    it('应该只显示中文术语（非首次出现）', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '用户',
@@ -80,10 +25,40 @@ describe('TermTooltip 组件', () => {
         },
       })
 
-      expect(wrapper.find('.term-only').exists()).toBe(true)
+      expect(wrapper.text()).toBe('用户')
     })
 
+    it('应该使用 term-only 类', () => {
+      const wrapper = mount(TermTooltip, {
+        props: {
+          term: '用户',
+          english: 'User',
+          firstOccurrence: true,
+        },
+      })
+
+      expect(wrapper.find('.term-only').exists()).toBe(true)
+    })
+  })
+
+  describe('tooltip 功能', () => {
     it('鼠标悬停时应该显示提示框', async () => {
+      const wrapper = mount(TermTooltip, {
+        props: {
+          term: '用户',
+          english: 'User',
+          definition: '在 Locust 中模拟真实用户行为的类',
+          firstOccurrence: true,
+        },
+      })
+
+      await wrapper.trigger('mouseenter')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.find('.tooltip-content').exists()).toBe(true)
+    })
+
+    it('鼠标悬停时应该显示提示框（非首次出现）', async () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '用户',
@@ -104,7 +79,7 @@ describe('TermTooltip 组件', () => {
         props: {
           term: '用户',
           english: 'User',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -125,7 +100,7 @@ describe('TermTooltip 组件', () => {
           term: '用户',
           english: 'User',
           definition: '测试定义',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -141,7 +116,7 @@ describe('TermTooltip 组件', () => {
           term: '用户',
           english: 'User',
           definition: '测试定义',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -157,7 +132,7 @@ describe('TermTooltip 组件', () => {
           term: '用户',
           english: 'User',
           definition: '在 Locust 中模拟真实用户行为的类',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -172,7 +147,7 @@ describe('TermTooltip 组件', () => {
         props: {
           term: '用户',
           english: 'User',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -184,12 +159,12 @@ describe('TermTooltip 组件', () => {
   })
 
   describe('样式和可访问性', () => {
-    it('应该有 cursor: help 样式', () => {
+    it('应该有 term-tooltip 类', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '用户',
           english: 'User',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -201,7 +176,7 @@ describe('TermTooltip 组件', () => {
         props: {
           term: '用户',
           english: 'User',
-          firstOccurrence: false,
+          firstOccurrence: true,
         },
       })
 
@@ -211,7 +186,7 @@ describe('TermTooltip 组件', () => {
   })
 
   describe('不同术语测试', () => {
-    it('应该正确显示"分布式模式(Distributed Mode)"', () => {
+    it('应该正确显示"分布式模式"', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '分布式模式',
@@ -220,11 +195,10 @@ describe('TermTooltip 组件', () => {
         },
       })
 
-      expect(wrapper.text()).toContain('分布式模式')
-      expect(wrapper.text()).toContain('(Distributed Mode)')
+      expect(wrapper.text()).toBe('分布式模式')
     })
 
-    it('应该正确显示"孵化速率(Hatch Rate)"', () => {
+    it('应该正确显示"孵化速率"', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '孵化速率',
@@ -233,11 +207,10 @@ describe('TermTooltip 组件', () => {
         },
       })
 
-      expect(wrapper.text()).toContain('孵化速率')
-      expect(wrapper.text()).toContain('(Hatch Rate)')
+      expect(wrapper.text()).toBe('孵化速率')
     })
 
-    it('应该正确显示"任务集(TaskSet)"', () => {
+    it('应该正确显示"任务集"', () => {
       const wrapper = mount(TermTooltip, {
         props: {
           term: '任务集',
@@ -246,8 +219,7 @@ describe('TermTooltip 组件', () => {
         },
       })
 
-      expect(wrapper.text()).toContain('任务集')
-      expect(wrapper.text()).toContain('(TaskSet)')
+      expect(wrapper.text()).toBe('任务集')
     })
   })
 })

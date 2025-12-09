@@ -1,16 +1,13 @@
 <template>
   <span
-    :class="['term-tooltip', { 'first-occurrence': firstOccurrence }]"
+    :class="['term-tooltip']"
     @mouseenter="showTooltip = true"
     @mouseleave="showTooltip = false"
   >
-    <span v-if="firstOccurrence" class="term-with-english">
-      {{ term }}<span class="english-term">({{ english }})</span>
-    </span>
-    <span v-else class="term-only">{{ term }}</span>
+    <span class="term-only">{{ term }}</span>
 
     <transition name="tooltip-fade">
-      <div v-if="showTooltip && !firstOccurrence" class="tooltip-content">
+      <div v-if="showTooltip" class="tooltip-content">
         <div class="tooltip-header">
           <span class="tooltip-zh">{{ term }}</span>
           <span class="tooltip-en">{{ english }}</span>
