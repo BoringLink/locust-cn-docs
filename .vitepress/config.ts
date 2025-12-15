@@ -103,7 +103,7 @@ export default defineConfig({
     ],
 
     // Canonical URL
-    ['link', { rel: 'canonical', href: 'https://locustcndocs.boringlink.cn/' }],
+    // ['link', { rel: 'canonical', href: 'https://locustcndocs.boringlink.cn/' }],
 
     // Alternate language versions
     ['link', { rel: 'alternate', hreflang: 'zh-CN', href: 'https://locustcndocs.boringlink.cn' }],
